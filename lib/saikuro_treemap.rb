@@ -3,7 +3,9 @@ require 'json/pure'
 require 'erb'
 require 'rake'
 require 'base64'
+require 'fileutils'
 
+module RDoc ; mattr_accessor :main_program_file ; end # hotfix by mail@codegourmet.de
 require 'saikuro'
 require 'saikuro_treemap/version'
 require 'saikuro_treemap/parser'
@@ -16,7 +18,7 @@ module SaikuroTreemap
     
     def run(options)
       
-      rm_rf options[:output_directory]
+      FileUtils::rm_rf options[:output_directory]
       
       state_filter = Filter.new(5)
       token_filter = Filter.new(10, 25, 50)
@@ -52,7 +54,7 @@ module SaikuroTreemap
   
 
   DEFAULT_CONFIG = {
-    :code_dirs => ['app/controllers', 'app/models', 'app/helpers', 'lib'],
+    :code_dirs => ['app/controllers', 'app/models', 'app/helpers', 'lib', 'config/initializers'],
     :output_file => 'reports/saikuro_treemap.html',
     :warn_cyclo => 5,
     :error_cyclo => 7,

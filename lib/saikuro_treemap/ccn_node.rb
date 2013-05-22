@@ -1,3 +1,13 @@
+
+# monkeypatch by mail@codegourmet.de
+class Fixnum
+  def to_json(options = nil)
+    to_s
+  end
+end
+
+
+
 module SaikuroTreemap
   class CCNNode
     attr_reader :path
@@ -60,7 +70,7 @@ module SaikuroTreemap
     private
     
     def compact_name
-      return '' if @path !~ /\S/
+      return '' if (@path !~ /\S/) || (@path =~ /:+/)
       @path.split('::').last.split('#').last
     end
     
